@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Print labels – Scatec Spare Parts</title>
+<link rel="icon" href="images/logo.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/labels.css">
+<style id="pg"></style>
+</head>
+<body>
+<header class="noprint"><div class="lg"><img src="images/logo.png" alt="Scatec"></div><span>Label printing (5S)</span><a class="hl" href="./">← Catalogue</a></header>
+<main class="lab">
+  <section class="panel noprint">
+    <div class="tabs" role="tablist">
+      <button id="tab-i" class="on" role="tab">Item labels</button>
+      <button id="tab-l" role="tab">Location / rack labels</button>
+    </div>
+
+    <label class="f">Public website address <small>(the QR codes open this address — use your deployed https:// URL)</small>
+      <input id="base" inputmode="url" autocomplete="off" spellcheck="false"></label>
+    <div id="warn" class="warn" hidden>This address is only reachable on your own computer/network. Labels printed now will not work for other people. Open this page from your deployed website (or type the public URL above) before printing.</div>
+
+    <div class="grid">
+      <label class="f">Label size
+        <select id="size">
+          <option value="l">100 × 60 mm (large – shelf / bin)</option>
+          <option value="m" selected>70 × 40 mm (medium)</option>
+          <option value="s">50 × 30 mm (small – QR + code)</option>
+        </select></label>
+      <label class="f">Paper
+        <select id="paper">
+          <option value="sheet">A4 sheet (many labels per page)</option>
+          <option value="roll">Label printer (1 label per page)</option>
+        </select></label>
+    </div>
+
+    <div id="opt-i">
+      <div class="grid">
+        <label class="f">Supplier <select id="fs"><option value="">All</option></select></label>
+        <label class="f">Zone <select id="fz"><option value="">All</option></select></label>
+        <label class="f">Copies each <input id="cp" type="number" min="1" max="20" value="1"></label>
+      </div>
+      <label class="f">Search <input id="fq" placeholder="code / name / manufacturer…" autocomplete="off"></label>
+    </div>
+
+    <div id="opt-l" hidden>
+      <label class="f">Source
+        <select id="lsrc"><option value="csv">Locations already in data/locations.csv</option><option value="gen">Generate a range (new racks)</option></select></label>
+      <div id="gen" class="grid" hidden>
+        <label class="f">Zones <small>(comma separated)</small><input id="gz" value="A" autocomplete="off"></label>
+        <label class="f">Racks per zone<input id="gr" type="number" min="1" max="99" value="4"></label>
+        <label class="f">Positions per rack<input id="gp" type="number" min="1" max="99" value="6"></label>
+      </div>
+      <label class="chk"><input type="checkbox" id="zs" checked> Also print a large zone sign for each zone</label>
+    </div>
+
+    <div class="bar2"><span id="cnt"></span><button id="pr" class="go">Print / Save as PDF</button></div>
+    <p class="hint">In the print window choose <b>Scale: 100%</b> (not “fit to page”) and turn <b>Headers and footers</b> off so the labels keep their exact size.</p>
+  </section>
+  <div id="sheet" class="sheet sz-m"></div>
+</main>
+<script src="js/qrcode.js"></script>
+<script src="js/labels.js"></script>
+</body>
+</html>
