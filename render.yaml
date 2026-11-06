@@ -1,0 +1,19 @@
+# Render Blueprint – Static Site (free, never sleeps)
+services:
+  - type: web
+    name: scatec-spare-parts
+    runtime: static
+    staticPublishPath: .
+    headers:
+      - path: /data/*
+        name: Cache-Control
+        value: no-cache
+      - path: /images/*
+        name: Cache-Control
+        value: public, max-age=86400
+      - path: /js/*
+        name: Cache-Control
+        value: no-cache
+      - path: /css/*
+        name: Cache-Control
+        value: no-cache
