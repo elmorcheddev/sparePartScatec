@@ -17,7 +17,7 @@ After any change to the Excel or photos run:
     python tools/build.py
 
 It validates the data (duplicates, missing fields, orphan photos), creates thumbnails and writes `data/products.json`.
-Status is automatic: Actual = 0 → Out of stock; Actual < Contractual → Below contractual; else In stock.
+Status is automatic (also shown in column O of the Excel, coloured red/amber/green): Actual = 0 → Out of stock; Actual < Contractual → Below contractual; else In stock.
 Changing only `locations.csv` needs no build step.
 
 ## 5S labels (QR)
