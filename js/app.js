@@ -43,7 +43,7 @@ async function loadLoc() {
   } catch (e) { }
 }
 
-function kv(k, v) { return '<div class="k">' + k + '</div><p>' + (v ? esc(v) : "\u2014") + '</p>' }
+function kv(k, v, featured) { return '<div class="k' + (featured ? ' featured' : '') + '">' + k + '</div><p>' + (v ? esc(v) : "\u2014") + '</p>' }
 function qrsvg(u) { const q = qrcode(0, "M"); q.addData(u); q.make(); return q.createSvgTag({ cellSize: 4, margin: 2, scalable: true }) }
 
 function bind(onlist) {
@@ -71,7 +71,7 @@ function detail(it) {
   const ph = it.photos.length ? it.photos.map(f => '<div><img src="' + photo(f) + '" alt="' + esc(it.title) + '" loading="lazy"></div>').join("") : "<div>No photo</div>";
   app.innerHTML = '<label class="sr" for="q">Scan or search</label><input id="q" placeholder="Scan next barcode here" autocomplete="off"><div id="nf" class="nf"></div><a class="b" href="#">\u2190 All items</a><div class="det"><div class="ph">' + ph + '</div><h2>' + esc(it.title) + '</h2><div class="bar">' + esc(it.code) + '</div><span class="stt ' + STC[it.status] + '">' + it.status + '</span>'
     + (it.source === "catalogue" ? '<div class="mu">Catalogue code \u2013 no unique product code in the Excel inventory</div>' : "")
-    + '<div class="k">Specification</div><p>' + esc(it.spec) + "</p>" + kv("Manufacturer", it.manufacturer) + (it.oem && it.oem !== it.code ? kv("OEM code", it.oem) : "") + kv("Supplier", it.supplier) + kv("Unit", it.unit)
+    + '<div class="k featured">Specification</div><p>' + esc(it.spec) + "</p>" + kv("Manufacturer", it.manufacturer, true) + (it.oem && it.oem !== it.code ? kv("OEM code", it.oem) : "") + kv("Supplier", it.supplier, true) + kv("Unit", it.unit)
     + '<div class="k">Storage location</div><p>' + (lc ? '<b class="bar" style="margin:0">' + esc(lc) + "</b> Zone " + esc(l.z) + " \u00b7 Rack " + esc(pad(l.r)) + " \u00b7 Position " + esc(pad(l.p)) : (l && l.z ? "Partially assigned: " + esc([l.z, l.r, l.p].filter(Boolean).join("-")) : "Not assigned yet")) + "</p>"
     + '<div class="k">QR identification</div><div class="qr">' + qrsvg(url) +   "</div>";
   bind(null); window.scrollTo(0, 0)
