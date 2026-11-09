@@ -26,13 +26,16 @@
     <div class="grid">
       <label class="f">Label size
         <select id="size">
-          <option value="l">100 × 60 mm (large – shelf / bin)</option>
-          <option value="m" selected>70 × 40 mm (medium)</option>
+          <option value="xl">135 × 90 mm (extra large – with photo)</option>
+          <option value="lg" selected>120 × 80 mm (large – with photo)</option>
+          <option value="l">95 × 60 mm (medium – with photo)</option>
+          <option value="m">70 × 40 mm (compact – no photo)</option>
           <option value="s">50 × 30 mm (small – QR + code)</option>
         </select></label>
       <label class="f">Paper
         <select id="paper">
-          <option value="sheet">A4 sheet (many labels per page)</option>
+          <option value="land" selected>A4 landscape sheet (many labels per page)</option>
+          <option value="sheet">A4 portrait sheet (many labels per page)</option>
           <option value="roll">Label printer (1 label per page)</option>
         </select></label>
     </div>
@@ -43,6 +46,7 @@
         <label class="f">Zone <select id="fz"><option value="">All</option></select></label>
         <label class="f">Copies each <input id="cp" type="number" min="1" max="20" value="1"></label>
       </div>
+      <label class="chk"><input type="checkbox" id="ph" checked> Print the product photo on the label (sizes 95 × 60 mm and bigger)</label>
       <label class="f">Search <input id="fq" placeholder="code / name / manufacturer…" autocomplete="off"></label>
     </div>
 

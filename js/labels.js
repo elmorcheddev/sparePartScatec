@@ -2,7 +2,7 @@
 const $=id=>document.getElementById(id);
 const esc=s=>(s==null?"":String(s)).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const pad=s=>/^\d$/.test(s)?"0"+s:s;
-const SIZES={l:[100,60],m:[70,40],s:[50,30]};
+const SIZES={xl:[135,90],lg:[120,80],l:[95,60],m:[70,40],s:[50,30]};
 const ZCOL=["#c0392b","#2563c9","#2e8b57","#d68910","#7d3c98","#138d9c","#d35400","#566573"];   // one colour per zone (visual management)
 let D=[],LOC={},mode="i";
 
@@ -26,8 +26,10 @@ const qrsvg=u=>{const q=qrcode(0,"M");q.addData(u);q.make();return q.createSvgTa
 
 function itemLabel(x,sz){
   const lc=lcode(x),z=(LOC[x.qr]||{}).z,mf=[x.manufacturer,x.supplier].filter(Boolean).join(" · ");
-  return '<div class="lb sz-'+sz+'" style="--zc:'+zcol(z)+'"><div class="top"><span class="loc">'+(lc?esc(lc):"LOC ____")+'</span><span class="id">'+esc(x.qr)+'</span></div>'
-   +'<div class="mid"><div class="q">'+qrsvg(base()+"#"+x.qr)+'</div><div class="tx"><div class="cd">'+esc(x.code)+'</div><div class="nm">'+esc(x.title)+'</div>'
+  const big=["xl","lg","l"].includes(sz)&&$("ph").checked,
+    ph=big?(x.photos.length?'<div class="ph"><img src="images/products/'+encodeURIComponent(x.photos[0])+'" alt=""></div>':'<div class="ph none">No photo</div>'):"";
+  return '<div class="lb sz-'+sz+(big?" hasph":"")+'" style="--zc:'+zcol(z)+'"><div class="top"><span class="loc">'+(lc?esc(lc):"LOC ____")+'</span><span class="id">'+esc(x.qr)+'</span></div>'
+   +'<div class="mid">'+ph+'<div class="q">'+qrsvg(base()+"#"+x.qr)+'</div><div class="tx"><div class="cd">'+esc(x.code)+'</div><div class="nm">'+esc(x.title)+'</div>'
    +(x.spec?'<div class="sp">'+esc(x.spec)+'</div>':'')+(mf?'<div class="mf">'+esc(mf)+'</div>':'')+'</div></div>'
    +'<div class="ft"><span>Scatec spare parts</span><span>Scan QR for details</span></div></div>'}
 
@@ -49,12 +51,12 @@ function locCodes(){
   return codes}
 
 function draw(){
-  const sz=$("size").value,roll=$("paper").value==="roll",[w,h]=SIZES[sz];let h2="",n=0;
+  const sz=$("size").value,paper=$("paper").value,roll=paper==="roll",[w,h]=SIZES[sz];let h2="",n=0;
   if(mode==="i"){const cp=Math.max(1,Math.min(20,+$("cp").value||1));items().forEach(x=>{for(let i=0;i<cp;i++){h2+=itemLabel(x,sz);n++}})}
   else{const codes=locCodes();if($("zs").checked)[...new Set(codes.map(c=>c.split("-")[0]))].forEach(z=>{h2+=locLabel(z,sz,true);n++});codes.forEach(c=>{h2+=locLabel(c,sz,false);n++})}
   $("sheet").className="sheet sz-"+sz;$("sheet").innerHTML=h2||'<p class="noprint" style="padding:20px">Nothing to print yet.'+(mode==="l"&&$("lsrc").value==="csv"?" Fill zone / rack / position in data/locations.csv, or choose “Generate a range”.":"")+'</p>';
   $("cnt").textContent=n+" label"+(n==1?"":"s")+" · "+w+" × "+h+" mm";
-  $("pg").textContent=roll?"@page{size:"+w+"mm "+h+"mm;margin:0}@media print{.sheet{display:block}.lb{page-break-after:always;break-after:page;border:0;border-radius:0}.lb:last-child{page-break-after:auto}}":"@page{size:A4;margin:8mm}";
+  $("pg").textContent=roll?"@page{size:"+w+"mm "+h+"mm;margin:0}@media print{.sheet{display:block}.lb{page-break-after:always;break-after:page;border:0;border-radius:0}.lb:last-child{page-break-after:auto}}":"@page{size:A4"+(paper==="land"?" landscape":"")+";margin:8mm}";
   const b=base();$("warn").hidden=!/\/\/(localhost|127\.|0\.0\.0\.0|192\.168\.|10\.|\[::1\])/i.test(b);
   try{localStorage.setItem("scatecBase",$("base").value)}catch(e){}}
 
@@ -70,9 +72,9 @@ async function init(){
   $("fs").innerHTML+=[...new Set(D.map(x=>x.supplier).filter(Boolean))].sort().map(s=>"<option>"+esc(s)+"</option>").join("");
   $("fz").innerHTML+='<option value="-">Unassigned</option>'+zones().map(z=>'<option value="'+esc(z)+'">Zone '+esc(z)+"</option>").join("");
   if(!zones().length){$("lsrc").value="gen";$("gen").hidden=false}
-  ["base","size","paper","fs","fz","fq","cp","gz","gr","gp","zs"].forEach(i=>{$(i).oninput=draw;$(i).onchange=draw});
+  ["base","size","paper","fs","fz","fq","cp","gz","gr","gp","zs","ph"].forEach(i=>{$(i).oninput=draw;$(i).onchange=draw});
   $("lsrc").onchange=()=>{$("gen").hidden=$("lsrc").value!=="gen";draw()};
   $("tab-i").onclick=()=>setMode("i");$("tab-l").onclick=()=>setMode("l");
-  $("pr").onclick=()=>window.print();
+  $("pr").onclick=async()=>{await Promise.all([...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=i.onerror=r})));window.print()};
   if(location.hash==="#locations")setMode("l");else draw()}
 init();
