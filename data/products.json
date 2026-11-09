@@ -10,7 +10,7 @@
             "supplier": "SUNGROW",
             "unit": "PCS",
             "source": "excel",
-            "status": "In stock",
+            "status": "Out of stock",
             "qty": {
                 "delivered": null,
                 "actual": 0,
