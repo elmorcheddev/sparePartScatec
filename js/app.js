@@ -73,7 +73,7 @@ function detail(it) {
     + (it.source === "catalogue" ? '<div class="mu">Catalogue code \u2013 no unique product code in the Excel inventory</div>' : "")
     + '<div class="k">Specification</div><p>' + esc(it.spec) + "</p>" + kv("Manufacturer", it.manufacturer) + (it.oem && it.oem !== it.code ? kv("OEM code", it.oem) : "") + kv("Supplier", it.supplier) + kv("Unit", it.unit)
     + '<div class="k">Storage location</div><p>' + (lc ? '<b class="bar" style="margin:0">' + esc(lc) + "</b> Zone " + esc(l.z) + " \u00b7 Rack " + esc(pad(l.r)) + " \u00b7 Position " + esc(pad(l.p)) : (l && l.z ? "Partially assigned: " + esc([l.z, l.r, l.p].filter(Boolean).join("-")) : "Not assigned yet")) + "</p>"
-    + '<div class="k">QR identification</div><div class="qr">' + qrsvg(url) + '<div class="t"><b>' + esc(it.qr) +   "</div>";
+    + '<div class="k">QR identification</div><div class="qr">' + qrsvg(url) +   "</div>";
   bind(null); window.scrollTo(0, 0)
 }
 
