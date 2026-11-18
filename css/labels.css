@@ -43,6 +43,12 @@ main.lab{max-width:1100px}
 .lb.sz-xl{width:135mm;height:90mm;--pw:44mm;--qs:38mm;--g:3mm}.sz-xl .top{height:11mm;font-size:18pt}.sz-xl .top .id{font-size:11pt}.sz-xl .mid{padding:2.5mm 3mm}.sz-xl .cd{font-size:18pt}.sz-xl .nm{font-size:12pt}.sz-xl .sp{font-size:9pt;-webkit-line-clamp:8}.sz-xl .mf{font-size:9pt}.sz-xl .ft{font-size:8pt}
 .lb.sz-lg{width:120mm;height:80mm;--pw:38mm;--qs:32mm;--g:2.5mm}.sz-lg .top{height:10mm;font-size:16pt}.sz-lg .top .id{font-size:10pt}.sz-lg .mid{padding:2mm 2.5mm}.sz-lg .cd{font-size:15pt}.sz-lg .nm{font-size:10.5pt}.sz-lg .sp{font-size:8pt;-webkit-line-clamp:7}.sz-lg .mf{font-size:8pt}.sz-lg .ft{font-size:7.5pt}
 .lb.sz-l.hasph{--pw:30mm;--qs:25mm;--g:2mm}.sz-l.hasph .top{height:8mm;font-size:13pt}.sz-l.hasph .cd{font-size:12pt}.sz-l.hasph .nm{font-size:8.5pt}.sz-l.hasph .sp{font-size:6.5pt;-webkit-line-clamp:4}.sz-l.hasph .mf{font-size:6.5pt}.sz-l.hasph .ft{font-size:6.5pt}
+/* 150 x 80 mm (15 x 8 cm) label */
+.lb.sz-xxl{width:150mm;height:80mm;--pw:46mm;--qs:40mm;--g:4mm}.sz-xxl .top{height:11mm;font-size:19pt;padding:0 5mm}.sz-xxl .top .id{font-size:12pt}.sz-xxl .mid{padding:4mm 5mm}.sz-xxl .cd{font-size:19pt}.sz-xxl .nm{font-size:13pt}.sz-xxl .sp{font-size:9.5pt;-webkit-line-clamp:6}.sz-xxl .mf{font-size:9.5pt}.sz-xxl .ft{font-size:8pt;padding:1mm 5mm}
+.sz-xxl.loc .big{font-size:44pt}.sz-xxl.loc .sub{font-size:14pt}.sz-xxl.loc .q{width:52mm;height:52mm}.sz-xxl.zone .big{font-size:90pt!important}
+/* A4 portrait, 3 labels of 15 x 8 cm: centred column, small gap */
+.sheet.a4x3{display:grid;grid-template-columns:150mm;justify-content:center;gap:5mm}
+@media print{.sheet.a4x3{gap:5mm;padding:0}.sheet.a4x3 .lb:nth-child(3n){break-after:page;page-break-after:always}.sheet.a4x3 .lb:last-child{break-after:auto;page-break-after:auto}}
 /* location labels at the new sizes */
 .sz-xl.loc .big{font-size:40pt}.sz-xl.loc .sub{font-size:13pt}.sz-xl.loc .q{width:50mm;height:50mm}.sz-xl.loc .top{height:11mm;font-size:18pt}
 .sz-lg.loc .big{font-size:34pt}.sz-lg.loc .sub{font-size:12pt}.sz-lg.loc .q{width:42mm;height:42mm}.sz-lg.loc .top{height:10mm;font-size:16pt}
